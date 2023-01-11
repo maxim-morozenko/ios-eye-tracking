@@ -176,7 +176,7 @@ extension EyeTracking: ARSessionDelegate {
         let lookPoint = frame.camera.projectPoint(
             SIMD3<Float>(x: lookAtVector.x, y: lookAtVector.y, z: lookAtVector.z),
             orientation: orientation,
-            viewportSize: CGSize(width: UIScreen.main.bounds.size.width * 2 , height: UIScreen.main.bounds.size.width * 2)
+            viewportSize: UIScreen.main.bounds.size
         )
 
         let screenPoint: CGPoint
@@ -189,7 +189,7 @@ extension EyeTracking: ARSessionDelegate {
         case .landscapeLeft:
             screenPoint = CGPoint(x: lookPoint.x - (distancePoint.x / 2), y: lookPoint.y - (distancePoint.y / 2))
         case .portrait:
-            screenPoint = CGPoint(x: lookPoint.x, y: lookPoint.y)
+            screenPoint = CGPoint(x: lookPoint.x - (distancePoint.x / 2), y: lookPoint.y - (distancePoint.y / 2))
         case .portraitUpsideDown:
             screenPoint = CGPoint(x: lookPoint.x + (distancePoint.x / 2), y: lookPoint.y - (distancePoint.y))
         default:
