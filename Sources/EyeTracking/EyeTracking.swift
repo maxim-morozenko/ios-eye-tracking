@@ -176,7 +176,7 @@ extension EyeTracking: ARSessionDelegate {
         let lookPoint = frame.camera.projectPoint(
             SIMD3<Float>(x: lookAtVector.x, y: lookAtVector.y, z: lookAtVector.z),
             orientation: orientation,
-            viewportSize: CGSize(width: UIScreen.main.bounds.size.width / 2 , height: UIScreen.main.bounds.size.width / 2)
+            viewportSize: CGSize(width: UIScreen.main.bounds.size.width * 2 , height: UIScreen.main.bounds.size.width * 2)
         )
 
         let screenPoint: CGPoint
