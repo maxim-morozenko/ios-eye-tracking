@@ -189,7 +189,7 @@ extension EyeTracking: ARSessionDelegate {
         case .landscapeLeft:
             screenPoint = CGPoint(x: lookPoint.x - (distancePoint.x / 2), y: lookPoint.y - (distancePoint.y / 2))
         case .portrait:
-            screenPoint = CGPoint(x: lookPoint.x - (distancePoint.x / 2), y: lookPoint.y - (distancePoint.y / 2))
+            screenPoint = CGPoint(x: lookPoint.x - (distancePoint.x), y: lookPoint.y - (distancePoint.y))
         case .portraitUpsideDown:
             screenPoint = CGPoint(x: lookPoint.x + (distancePoint.x / 2), y: lookPoint.y - (distancePoint.y))
         default:
