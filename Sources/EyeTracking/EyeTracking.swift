@@ -18,13 +18,15 @@ public class EyeTracking: NSObject {
     /// so it can be used in user builds, which can be inspected at any time with `Console.app`.
     /// Defaults to `false` to prevent too much noise in Xcode's console.
     public var loggingEnabled = false
+    
+    /// Initialize `ARKit`'s `ARSession` when the class is created. This is the most lightweight
+    /// method for accessing all facial tracking features.
+    public let arSession = ARSession()
+
 
     // MARK: - Internal Properties
 
-    /// Initialize `ARKit`'s `ARSession` when the class is created. This is the most lightweight
-    /// method for accessing all facial tracking features.
-    let arSession = ARSession()
-
+    
     /// A view that contains any output for visualizations.
     lazy var visualizationView: UIView = {
         let view = UIView()
