@@ -189,7 +189,7 @@ extension EyeTracking: ARSessionDelegate {
         case .landscapeLeft:
             screenPoint = CGPoint(x: lookPoint.x - (distancePoint.x / 2), y: lookPoint.y - (distancePoint.y / 2))
         case .portrait:
-            screenPoint = CGPoint(x: lookPoint.x - (distancePoint.x), y: lookPoint.y - (distancePoint.y))
+            screenPoint = CGPoint(x: lookPoint.x, y: lookPoint.y)
         case .portraitUpsideDown:
             screenPoint = CGPoint(x: lookPoint.x + (distancePoint.x / 2), y: lookPoint.y - (distancePoint.y))
         default:
@@ -495,7 +495,7 @@ extension EyeTracking {
     func updatePointer(with point: CGPoint) {
         guard let orientation = UIApplication.shared.windows.first?.windowScene?.interfaceOrientation else { return }
         let size = UIScreen.main.bounds.size
-        let adjusted: (x: CGFloat, y: CGFloat)
+        var adjusted: (x: CGFloat, y: CGFloat)
 
         // These adjustments are manual, based on testing.
         // This could be adjusted during a configuration process of some kind.
@@ -507,6 +507,19 @@ extension EyeTracking {
         default:
             assertionFailure("Unknown Orientation")
             return
+        }
+        
+        let midX = UIScreen.main.bounds.midX
+        let midY = UIScreen.main.bounds.midY
+        
+        
+        // MARK: Rectangle in center with half size
+        let innerRect = CGRect(x: midX / 2, y: midY / 2, width: size.width / 2, height: size.height / 2)
+        
+        if innerRect.contains(point) {
+            // Add constans
+            // For center rectangle increase * 2
+            adjusted = (adjusted.x * 1.2, adjusted.y * 1.2)
         }
 
         if pointerFilter == nil {
