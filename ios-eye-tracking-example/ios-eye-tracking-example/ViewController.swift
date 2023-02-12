@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         }
 
         eyeTracking.startSession()
-        eyeTracking.loggingEnabled = true
+        eyeTracking.loggingEnabled = false
         sessionID = eyeTracking.currentSession?.id
     }
 

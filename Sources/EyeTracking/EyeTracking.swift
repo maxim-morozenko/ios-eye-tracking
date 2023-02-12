@@ -196,6 +196,32 @@ extension EyeTracking: ARSessionDelegate {
             assertionFailure("Unknown Orientation")
             return
         }
+        
+        /*
+         let size = UIScreen.main.bounds.size
+         
+         let minX = UIScreen.main.bounds.minX
+         let minY = UIScreen.main.bounds.minY
+         
+         let midX = UIScreen.main.bounds.midX
+         let midY = UIScreen.main.bounds.midY
+         
+         let maxX = UIScreen.main.bounds.maxX
+         let maxY = UIScreen.main.bounds.maxY
+         
+         
+         // MARK: Rectangle in center with half size
+         
+         
+         let listOfRects: [CGFloat: CGRect] = [
+             // 0.2: CGRect(x: minX, y: minY, width: size.width, height: size.height),
+             0.4: CGRect(x: midX / 2, y: midY / 2, width: size.width / 2, height: size.height / 2),
+             1.2: CGRect(x: midX - (maxX / 6), y: midY - ( maxY / 6 ), width: size.width / 6, height: size.height / 6),
+             1.7: CGRect(x: midX - (maxX / 8), y: midY - ( maxY / 8 ), width: size.width / 8, height: size.height / 8),
+             2.0: CGRect(x: midX - (maxX / 10), y: midY - ( maxY / 10 ), width: size.width / 10, height: size.height / 10),
+         ]
+         
+         */
 
         // Update Session Data
         let frameTimestampUnix = timeOffset + frame.timestamp
@@ -509,19 +535,7 @@ extension EyeTracking {
             return
         }
         
-        let midX = UIScreen.main.bounds.midX
-        let midY = UIScreen.main.bounds.midY
         
-        
-        // MARK: Rectangle in center with half size
-        let innerRect = CGRect(x: midX / 2, y: midY / 2, width: size.width / 2, height: size.height / 2)
-        
-        if innerRect.contains(point) {
-            // Add constans
-            // For center rectangle increase * 2
-            adjusted = (adjusted.x * 1.2, adjusted.y * 1.2)
-        }
-
         if pointerFilter == nil {
             pointerFilter = (
                 LowPassFilter(value: adjusted.x, filterValue: 0.85),
@@ -531,8 +545,10 @@ extension EyeTracking {
             pointerFilter?.x.update(with: adjusted.x)
             pointerFilter?.y.update(with: adjusted.y)
         }
+        
+        
 
-        guard let pointerFilter = pointerFilter else { return }
+        guard var pointerFilter = pointerFilter else { return }
 
         if loggingEnabled {
             os_log(
@@ -551,6 +567,9 @@ extension EyeTracking {
                 pointerFilter.y.value
             )
         }
+        
+        
+
 
         pointer.frame = CGRect(
             x: pointerFilter.x.value,
